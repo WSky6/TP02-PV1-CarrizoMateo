@@ -68,7 +68,7 @@ public class Attack : MonoBehaviour
 
     public void Shoot()
     {
-        RaycastInfo(offsetGun);
+        RaycastInfo(gun, offsetGun);
         if (Physics.Raycast(origin, dir, out hit, rayDistance))
         {
             AplyDamage(hit.collider.gameObject);
@@ -78,8 +78,8 @@ public class Attack : MonoBehaviour
 
     public void Melee()
     {
-        RaycastInfo(offsetSword);
-        Collider[] colliders =  Physics.OverlapSphere(origin, radius);
+        RaycastInfo(sword, offsetSword);
+        Collider[] colliders = Physics.OverlapSphere(origin, radius);
         if (colliders.Length > 0)//solo para visualizar el debug
         {
             foreach (Collider col in colliders)
@@ -124,9 +124,9 @@ public class Attack : MonoBehaviour
         }
     }
 
-    private void RaycastInfo(Vector3 offset)
+    private void RaycastInfo(Transform weapon, Vector3 offset)
     {
-        origin = sword.TransformPoint(offset);
+        origin = weapon.TransformPoint(offset);
         dir = transform.forward;
     }
 }
