@@ -5,11 +5,23 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header ("Movement Settings")]
     [SerializeField] private float speed;
+    [SerializeField] private float runSpeed;
+    [SerializeField] private float walkSpeed;
 
     public float Speed
     {
         get { return speed; }
         set { speed = value; }
+    }
+    public float RunSpeed
+    {
+        get { return runSpeed; }
+        set { runSpeed = value; }
+    }
+    public float WalkSpeed
+    {
+        get { return walkSpeed; }
+        set { walkSpeed = value; }
     }
     [SerializeField] private float jumpForce;
     [SerializeField] private bool isStop=false;
@@ -22,12 +34,9 @@ public class PlayerMovement : MonoBehaviour
     private float moveHorizontal;
     private float moveVertical;
     private Rigidbody rb;
-
     [Header ("Raycast Settings")]
     [SerializeField]private bool isGrounded;
-
     [SerializeField] private float rayDistance;
-
     [SerializeField] private LayerMask groundLayer;
 
 
@@ -40,13 +49,20 @@ public class PlayerMovement : MonoBehaviour
     {
             moveHorizontal = Input.GetAxis("Horizontal");
             moveVertical = Input.GetAxis("Vertical");
-
             CheckGround();
 
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
                 rb.AddForce(new Vector3(0, jumpForce, 0));
             }
+
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                speed = runSpeed;
+            } else
+        {
+            speed = walkSpeed;
+        }
     }
 
     private void FixedUpdate()
@@ -58,9 +74,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 origin = transform.position;
         isGrounded = Physics.Raycast(origin, Vector3.down, rayDistance, groundLayer);
-
         Color ColorRay = isGrounded ? Color.green : Color.red;
-
         Debug.DrawRay(origin,Vector3.down*rayDistance,ColorRay);
     }
 
