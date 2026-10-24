@@ -7,7 +7,6 @@ public class Collectible : MonoBehaviour
     public void Interact()
     {
         ScoreManagment.Instance.AddScore(points);
-
         Destroy(gameObject);
     }
 }

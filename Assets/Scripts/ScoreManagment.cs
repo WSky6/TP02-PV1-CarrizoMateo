@@ -13,5 +13,6 @@ public class ScoreManagment : MonoBehaviour
     {
         score += amount;
         Debug.Log("Puntaje: " + score);
+        GameManager.Instance.CheckScoreVictory(score);
     }
 }

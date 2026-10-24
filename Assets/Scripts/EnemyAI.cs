@@ -16,6 +16,7 @@ public class EnemyAI : MonoBehaviour
     [Header("Patrol Settings")]
     [SerializeField] private Transform[] patrolPoints;
     [SerializeField] private float waitTimeAtPoint = 2f;
+    private PlayerStealth playerStealth;
     private int currentPatrolIndex;
     private bool isWaitingAtPoint;
 
@@ -53,10 +54,27 @@ public class EnemyAI : MonoBehaviour
         {
             GoToNextPatrolPoint();
         }
+
+        if (playerObj != null)
+        {
+            playerTransform = playerObj.transform;
+            healthSystemPlayer = playerObj.GetComponent<HealthSystem>();
+            playerStealth = playerObj.GetComponent<PlayerStealth>();
+        }
     }
 
     private void Update()
     {
+        if (playerStealth != null && playerStealth.IsInvisible)
+        {
+            if (currentState != AIState.Patrol)
+            {
+                currentState = AIState.Patrol;
+                GoToNextPatrolPoint();
+            }
+            return;
+        }
+
         if (isStunned || playerTransform == null || (healthSystemPlayer != null && healthSystemPlayer.IsDead))
         {
             agent.isStopped = true;
@@ -183,9 +201,16 @@ public class EnemyAI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackRadius);
     }
 
+    private Coroutine stunCoroutine;
+
     public void Stun(float duration)
     {
-        StartCoroutine(StunRoutine(duration));
+        if(stunCoroutine != null)
+        {
+            StopCoroutine(stunCoroutine);
+        }
+
+        stunCoroutine = StartCoroutine(StunRoutine(duration));
     }
 
     private IEnumerator StunRoutine(float duration)

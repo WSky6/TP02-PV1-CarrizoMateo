@@ -19,8 +19,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private EnemyAI[] enemies;
     [SerializeField] private int totalEnemies;
     [SerializeField] private int enemiesRemaining;
+    [Header("Score Settings")]
+    [SerializeField] private int pointsToWin = 60;
 
-    //singleton
     private void Awake()
     {
         if(Instance ==null)
@@ -112,4 +113,16 @@ public class GameManager : MonoBehaviour
         ChangeState(GameState.Victory);
     }
 
+    public void CheckScoreVictory(int score)
+    {
+         Debug.Log("Verificando victoria. Score: " + score);
+        if (currentState != GameState.Playing)
+            return;
+
+        if (score >= pointsToWin)
+        {
+            Debug.Log("VICTORIA POR PUNTOS");
+            ChangeState(GameState.Victory);
+        }
+    }
 }

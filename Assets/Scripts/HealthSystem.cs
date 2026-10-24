@@ -51,6 +51,18 @@ public class HealthSystem : MonoBehaviour
     private void Dead() 
     { 
         isDead = true;
+
+        EnemyAI enemyAI = GetComponent<EnemyAI>();
+        if(enemyAI != null)
+        {
+            enemyAI.enabled = false;
+        }
+
+        EnemyAIGenerated enemyGenerated = GetComponent<EnemyAIGenerated>();
+        if(enemyGenerated != null)
+        {
+        enemyGenerated.enabled = false;
+        }
         //agregar condicional comparando tags player y character, notificar al gameManager
         if (gameObject.CompareTag("Player"))
         {
