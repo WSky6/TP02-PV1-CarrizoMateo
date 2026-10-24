@@ -1,258 +1,132 @@
-### <h1>Parkour 3D: \[Red.Jr]</h1>
+# Infiltración a la Instalación
 
-### <h2>Datos del Proyecto</h2>
+## Desarrollador
 
-### <p><strong>Asignatura:</strong> Programación de Videojuegos I</p>
+- Nombre: Mateo
+- Apellido: Carrizo
+- LU: TUV000877
 
-### <p><strong>Carrera:</strong> Tecnicatura Universitaria en Diseño Integral de Videojuegos (TUDIVJ) - UNJu</p>
+---
 
-### <p><strong>Trabajo Práctico N° 1:</strong> Entorno Interactivo 3D, Temporizadores y Git/GitHub</p>
+# Descripción del Juego
 
-### <p><strong>Estudiante:</strong> Mateo Ricardo Carrizo</p>
+"Infiltración a la Instalación" es un prototipo desarrollado en Unity donde el jugador debe recorrer una instalación hostil mientras evita o enfrenta enemigos controlados mediante inteligencia artificial.
 
-### <p><strong>LU:</strong> \[TUV000877]</p>
+Durante la exploración, el jugador puede interactuar con botones para abrir puertas, recolectar objetos para obtener puntos y utilizar herramientas especiales para facilitar su avance. La partida puede completarse eliminando 5 enemigos del escenario o alcanzando la cantidad de puntos requerida para obtener la victoria (60).
 
-### <p><strong>Equipo Docente:</strong></p>
+---
 
-### <ul>
+# Guía de Controles
 
-### <li>Mg. Ing. Ariel Alejandro Vega</li>
+| Acción | Tecla |
+|----------|----------|
+| Moverse | W A S D |
+| Saltar | Espacio |
+| Interactuar | E |
+| Ataque principal | Click Izquierdo |
+| Pistola Aturdidora | Click Derecho |
+| Pausa | P |
 
-### <li>Tecn. Kevin Alexis Roman Llampa</li>
+---
 
-### </ul>
+# Sistemas Implementados
 
-### <hr>
+## Interacción a Distancia
 
-### <h2>🎮 Descripción del Proyecto</h2>
+Se implementó un sistema de interacción mediante Raycast frontal desde el jugador.
 
-### <p>Red.Jr sigue la pequeña aventura del mismo, debe liberar a su padre de la jaula en la que fue atrapado, quien lo puso ahi? No es importante (Por ahora al menos). Se trata de un plataformero 3D basico, realizado con el objetivo de cumplir con los conocimientos dados en la materia.</p>
+Permite:
 
-### <hr>
+- Activar botones.
+- Recolectar objetos.
 
-### <h2>🕹️ Controles del Jugador</h2>
+### Scripts utilizados
 
-### <table>
+- `PlayerInteraction.cs`
+- `ButtonInteraction.cs`
+- `DoorController.cs`
+- `Collectible.cs`
 
-### <thead>
+---
 
-### <tr>
+# Opcionales Elegidos
 
-### <th>Acción</th>
+## Opción 1: Pistola Aturdidora
 
-### <th>Tecla</th>
+Se implementó un arma especial que utiliza Raycast para detectar enemigos.
 
-### <th>Descripción</th>
+Cuando impacta a un enemigo:
 
-### </tr>
+- Lo paraliza temporalmente.
+- Detiene su movimiento.
+- Cancela temporalmente su comportamiento de persecución.
 
-### </thead>
+### Scripts utilizados
 
-### <tbody><tr>
+- `StunGun.cs`
+- `EnemyAI.cs`
+- `EnemyAIGenerated.cs`
 
-### <td>Movimiento</td>
+---
 
-### <td>W, A, S, D</td>
+## Opción 2: Power-Up de Invisibilidad
 
-### <td>Mover al personaje</td>
+Se implementó un ítem recolectable que vuelve al jugador indetectable por la IA durante un tiempo limitado.
 
-### </tr>
+Mientras el efecto permanece activo:
 
-### <tr>
+- Los enemigos dejan de perseguir al jugador.
+- Regresan al estado de patrullaje.
 
-### <td>Cámara</td>
+### Scripts utilizados
 
-### <td>Mouse</td>
+- `InvisibilityPowerUp.cs`
+- `PlayerStealth.cs`
+- `EnemyAI.cs`
+- `EnemyAIGenerated.cs`
 
-### <td>Rotar la cámara</td>
+---
 
-### </tr>
+## Opción 3: Generación de Enemigos
 
-### <tr>
+Se implementó un sistema de generación periódica de enemigos utilizando prefabs.
 
-### <td>Salto</td>
+Los enemigos creados dinámicamente:
 
-### <td>Espacio</td>
+- Utilizan NavMeshAgent.
+- Patrullan el escenario.
+- Detectan al jugador.
+- Pueden ser aturdidos y eliminados.
 
-### <td>Saltar entre plataformas</td>
+### Scripts utilizados
 
-### </tr>
+- `GeneradorBehavior.cs`
+- `EnemyAIGenerated.cs`
 
-### <tr>
+---
 
-### <td>Interacción</td>
+# Capturas del Proyecto
 
-### <td>E</td>
+Agregar imagen mostrando interacción, IA o power-ups.
 
-### <td>Alzar objetos y dejarlos</td>
+![Gameplay 1](img/imagen1.png)
+![Gameplay 2](img/imagen2.png)
 
-### </tr>
+---
 
-### </tbody></table>
+# Tecnologías Utilizadas
 
-### <hr>
+- Unity
+- C#
+- NavMesh
+- Raycast
+- Corrutinas
+- Sistema de Estados
+- Prefabs
+- Git y GitHub
 
-### <h2>📸 Capturas de Pantalla</h2>
+---
 
-### <h3>Plataformas Moviles</h3>
+# Repositorio
 
-### <p>Imagenes/captura01.png</p>
-
-### <h3>Padre</h3>
-
-### <p>Imagenes/captura02.png</p>
-
-### <hr>
-
-### <h2>📝 Explicación Técnica del Código</h2>
-
-### <h3>1️⃣ Generación de Plataformas (Invoke)</h3>
-
-### <p><strong>Script:</strong> <code>GeneradorBehavior.cs</code></p>
-
-### <p><strong>Objetivo:</strong><br>La plataforma aparece, recorre una distancia determinada y luego desaparece.</p>
-
-### <pre><code class="language-csharp">void Start()
-
-### &#x20;   {
-
-### &#x20;       InvokeRepeating("GenerarPlataforma", TiempoInicio, TiempoGeneracion);
-
-### &#x20;   }
-
-### </code></pre>
-
-### <p><strong>Explicación:</strong></p>
-
-### <ul>
-
-### <li><code>Invoke()</code> ejecuta un método luego de cierto tiempo.</li>
-
-### <li>En este caso esta determinado por TiempoGeneracion.</li>
-
-### </ul>
-
-### <hr>
-
-### <h3>2️⃣ Corrutinas (Coroutine)</h3>
-
-### <p><strong>Script:</strong> <code>SpeedPowerUp.cs</code></p>
-
-### <p><strong>Objetivo:</strong><br>Esperar un período de tiempo antes de volver a mostrar el PowerUp.</p>
-
-### <pre><code class="language-csharp">private IEnumerator RespawnSpeed()
-
-### &#x20;   {
-
-### &#x20;       renderer.enabled = false;
-
-### &#x20;       powerUpCollider.enabled = false;
-
-### &#x20;       yield return new WaitForSeconds(20f);
-
-### &#x20;       renderer.enabled = true;
-
-### &#x20;       powerUpCollider.enabled = true;
-
-### &#x20;   }
-
-### </code></pre>
-
-### <p><strong>Explicación:</strong></p>
-
-### <ul>
-
-### <li><code>IEnumerator</code> permite crear una corrutina.</li>
-
-### <li><code>WaitForSeconds()</code> pausa la ejecución.</li>
-
-### <li>Después del tiempo indicado el PowerUp vuelve a activarse.</li>
-
-### </ul>
-
-### <hr>
-
-### <h3>3️⃣ Emparentamiento (SetParent)</h3>
-
-### <p><strong>Script:</strong> <code>PickUpItem.cs</code></p>
-
-### <p><strong>Objetivo:</strong><br>Permitir que el jugador recoja un objeto y lo coloque en su mano.</p>
-
-### <pre><code class="language-csharp">private void PickUpItem(GameObject item)
-
-### &#x20;   {
-
-### &#x20;       item.transform.SetParent(hand);
-
-### &#x20;       item.transform.localPosition = Vector3.zero;
-
-### &#x20;       item.transform.localRotation = Quaternion.identity;
-
-### &#x20;       currentItem = item;
-
-### &#x20;       Collider itemCollider = item.GetComponent\&lt;Collider\&gt;();
-
-### 
-
-### &#x20;       if(itemRb!=null)
-
-### &#x20;       {
-
-### &#x20;           itemRb.isKinematic = true;
-
-### &#x20;       }
-
-### 
-
-### &#x20;       if(itemCollider!=null)
-
-### &#x20;       {
-
-### &#x20;           itemCollider.enabled = false;
-
-### &#x20;       }
-
-### &#x20;       Debug.Log("Recogido");
-
-### &#x20;   }
-
-### </code></pre>
-
-### <p><strong>Explicación:</strong></p>
-
-### <ul>
-
-### <li>Coloca al objeto como hijo de Hand, asi el jugador puede llevar el objeto consigo.</li>
-
-### <li>Coloca el objeto exactamente en la mano.</li>
-
-### <li>Tambien reinicia su rotación para que concuerde con Hand.</li>
-
-### </ul>
-
-### <hr>
-
-### <h2>⚙️ Tecnologías Utilizadas</h2>
-
-### <ul>
-
-### <li>Unity 6</li>
-
-### <li>C#</li>
-
-### <li>Git</li>
-
-### <li>GitHub</li>
-
-### </ul>
-
-### <hr>
-
-### <h2>👤 Autor</h2>
-
-### <p><strong>Mateo Carrizo</strong></p>
-
-### <p>Tecnicatura Universitaria en Diseño Integral de Videojuegos - UNJu</p>
-
-
-
+https://github.com/WSky6/TP02-PV1-CarrizoMateo
