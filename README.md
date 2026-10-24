@@ -29,6 +29,18 @@ Durante la exploración, el jugador puede interactuar con botones para abrir pue
 
 ---
 
+# Aclaraciones
+
+## PowerUpInvisibilidad
+
+Tiene forma de bolita Azul.
+
+## Objetos a recoger
+
+Tienen forma de caja Azul.
+
+---
+
 # Sistemas Implementados
 
 ## Interacción a Distancia
